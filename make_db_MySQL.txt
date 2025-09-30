@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS sampledb DEFAULT CHARACTER SET utf8mb4;
+
+USE sampledb;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(100) NOT NULL
+);
+
+-- username key가 중복일 경우 에러 대신 업데이트를 실행합니다.
+INSERT INTO users (username, password) VALUES ('admin', 'admin123')
+ON DUPLICATE KEY UPDATE password=VALUES(password);
+
+-- 화면 표시/추가용 데이터 테이블(회원 목록 예시)
+CREATE TABLE IF NOT EXISTS members (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL
+);
+
+INSERT INTO members (name, email)
+VALUES ('홍길동','hong@test.com'), ('김철수','kim@test.com')
+ON DUPLICATE KEY UPDATE email=VALUES(email);
