@@ -20,6 +20,7 @@ class DB:
         with self.connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql,(username, password))
+                #SELECT는 행 단위로 가져온다. fetchone 의 결과는 튜플
                 count, = cur.fetchone()
                 return count == 1
             
@@ -29,7 +30,7 @@ class DB:
         with self.connect() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql)
-                return cur.fetchall() #[(id, name, email), ...]
+                return cur.fetchall() #튜플 [(id, name, email), ...]
             
     #멤버 추가
     def insert_member(self, name, email):
